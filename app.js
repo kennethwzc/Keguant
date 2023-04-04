@@ -8,7 +8,7 @@ principalInput.addEventListener("input", () => {
 });
 
 interestInput.addEventListener("input", () => {
-  const value = interestInput.value.replace(/\D/g, "");
+  const value = interestInput.value.replace(/(?!\d|%)/g, "");
   const formattedValue = value ? `${value}%` : "";
   interestInput.value = formattedValue;
 });
