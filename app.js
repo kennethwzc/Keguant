@@ -1,45 +1,45 @@
 const principalInput = document.getElementById("principal");
 const interestInput = document.getElementById("interest");
-const tenureInput = document.getElementById("tenure");
-const form = document.querySelector("form");
 
-// Add commas to loan principal input in real-time
-principalInput.addEventListener("input", (event) => {
-  const value = event.target.value;
-  event.target.value = addCommas(value);
+// Add dollar sign to the principal input
+principalInput.addEventListener("input", function (e) {
+  // Get the value of the input field
+  let principal = principalInput.value;
+  // Remove non-numeric characters from the input
+  principal = principal.replace(/[^0-9.]/g, "");
+  // Convert the input to a number
+  principal = Number(principal);
+  // Format the input with commas for thousands
+  principal = principal.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0 });
+  // Update the input field with the formatted value
+  principalInput.value = principal;
 });
 
-// Remove commas and dollar sign when submitting form
-form.addEventListener("submit", (event) => {
-  const principalValue = parseFloat(principalInput.value.replace(/,/g, "").replace(/\$/g, ""));
-  const interestValue = parseFloat(interestInput.value.replace(/\%/g, ""));
-  const tenureValue = parseFloat(tenureInput.value);
-
-  calculateMonthlyPayment(principalValue, interestValue, tenureValue);
-
-  event.preventDefault();
+// Add percent sign to the interest input
+interestInput.addEventListener("input", function (e) {
+  // Get the value of the input field
+  let interest = interestInput.value;
+  // Remove non-numeric characters from the input
+  interest = interest.replace(/[^0-9.]/g, "");
+  // Convert the input to a number
+  interest = Number(interest);
+  // Format the input as a percentage
+  interest = interest.toLocaleString("en-US", { style: "percent", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  // Update the input field with the formatted value
+  interestInput.value = interest;
 });
 
-// Add percent sign to interest input when typing
-interestInput.addEventListener("input", (event) => {
-  event.target.value = event.target.value.replace(/[^0-9.]/g, "") + "%";
-});
-
-// Utility function to add commas to a number
-function addCommas(num) {
-  const str = num.toString();
-  if (str.length <= 3) return str;
-  const intPart = str.slice(0, -3);
-  const decimalPart = str.slice(-3);
-  return intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + decimalPart;
-}
-
-function calculateMonthlyPayment(principal, interest, tenure) {
-  const monthlyInterest = (interest / 12) / 100;
-  const numberOfPayments = tenure * 12;
-  const numerator = monthlyInterest * Math.pow((1 + monthlyInterest), numberOfPayments);
-  const denominator = Math.pow((1 + monthlyInterest), numberOfPayments) - 1;
-  const monthlyPayment = principal * (numerator / denominator);
+// Calculate the monthly payment and display it on the page
+function handleFormSubmission() {
+  const principal = Number(principalInput.value.replace(/[^0-9.]/g, ""));
+  const interest = Number(interestInput.value.replace(/[^0-9.]/g, ""));
+  const tenure = Number(document.getElementById("tenure").value);
+  const monthlyInterestRate = interest / 100 / 12;
+  const totalPayments = tenure * 12;
+  const discountFactor =
+    (Math.pow(1 + monthlyInterestRate, totalPayments) - 1) /
+    (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, totalPayments));
+  const monthlyPayment = principal / discountFactor;
   const resultElement = document.getElementById("result");
-  resultElement.innerText = `Your monthly payment is $${monthlyPayment.toFixed(2)}`;
+  resultElement.textContent = "Monthly payment: " + monthlyPayment.toFixed(2);
 }
