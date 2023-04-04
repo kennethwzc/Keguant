@@ -1,52 +1,36 @@
-const principalInput = document.getElementById('principal');
-const interestInput = document.getElementById('interest');
-const tenureInput = document.getElementById('tenure');
+const principalInput = document.getElementById("principal");
+const interestInput = document.getElementById("interest");
 
-// Function to format number with commas for every 3 digits
-function addCommas(num) {
-  const numStr = num.toString();
-  const numParts = numStr.split('.');
-  numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return numParts.join('.');
+principalInput.addEventListener("input", addCommas);
+
+function addCommas(event) {
+  const input = event.target;
+  const plainValue = input.value.replace(/[^0-9]/g, "");
+  const formattedValue = new Intl.NumberFormat().format(plainValue);
+  input.value = formattedValue ? "$" + formattedValue : "";
 }
 
-// Add $ to principal input and add commas for every 3 digits
-principalInput.addEventListener('input', function(e) {
-  let value = e.target.value.replace(/\D/g, '');
-  value = addCommas(value);
-  e.target.value = '$' + value;
-});
+interestInput.addEventListener("input", addPercent);
 
-// Remove $ and commas from principal input on form submission
-principalInput.closest('form').addEventListener('submit', function() {
-  principalInput.value = principalInput.value.replace(/[$,]/g, '');
-});
+function addPercent(event) {
+  const input = event.target;
+  const plainValue = input.value.replace(/[^0-9\.]/g, "");
+  const formattedValue = plainValue ? plainValue + "%" : "";
+  input.value = formattedValue;
+}
 
-// Add % to interest input
-interestInput.addEventListener('input', function(e) {
-  let value = e.target.value.replace(/\D/g, '');
-  value += '%';
-  e.target.value = value;
-});
-
-// Remove % from interest input on form submission
-interestInput.closest('form').addEventListener('submit', function() {
-  interestInput.value = interestInput.value.replace('%', '');
-});
-
-function calculateMonthlyPayment() {
-  const principal = parseFloat(principalInput.value.replace(/[$,]/g, ''));
-  const interestRate = parseFloat(interestInput.value.replace('%', '')) / 100 / 12;
-  const tenure = parseFloat(tenureInput.value);
-  
-  const monthlyPayment = (principal * interestRate * Math.pow(1 + interestRate, tenure * 12)) /
-    (Math.pow(1 + interestRate, tenure * 12) - 1);
-    
-  const resultElement = document.getElementById('result');
-  resultElement.textContent = `Your monthly payment is $${monthlyPayment.toFixed(2)}.`;
+function calculateMonthlyPayment(principal, interestRate, tenure) {
+  const monthlyInterestRate = interestRate / 1200;
+  const numberOfPayments = tenure * 12;
+  const monthlyPayment = (principal * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+  return monthlyPayment.toFixed(2);
 }
 
 function handleFormSubmission() {
-  event.preventDefault();
-  calculateMonthlyPayment();
+  const principal = parseFloat(principalInput.value.replace(/[^0-9\.]/g, ""));
+  const interestRate = parseFloat(interestInput.value.replace(/[^0-9\.]/g, ""));
+  const tenure = parseFloat(document.getElementById("tenure").value);
+  const monthlyPayment = calculateMonthlyPayment(principal, interestRate, tenure);
+  const resultElement = document.getElementById("result");
+  resultElement.textContent = `Monthly payment: $${monthlyPayment}`;
 }
