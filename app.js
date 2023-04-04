@@ -20,17 +20,23 @@ function handleFormSubmission() {
   resultElement.textContent = `Your monthly payment is $${addCommas(monthlyPayment.toFixed(2))}.`;
 }
 
-function addCommas(nStr) {
-  nStr += "";
-  var x = nStr.split(".");
-  var x1 = x[0];
-  var x2 = x.length > 1 ? "." + x[1] : "";
-  var rgx = /(\d+)(\d{3})/;
-  while (rgx.test(x1)) {
-    x1 = x1.replace(rgx, "$1" + "," + "$2");
+function addCommas(num) {
+  num = num.toString().replace(/\$|\,/g,'');
+  if(isNaN(num))
+    num = "0";
+  let sign = num.includes('-') ? '-' : '';
+  num = num.replace('-', '');
+  let cents = '';
+  if(num.indexOf('.') > 0) {
+    cents = '.' + num.substr(num.indexOf('.')+1);
+    num = num.substr(0, num.indexOf('.'));
   }
-  return x1 + x2;
+  let thousands = /(\d+)(\d{3})/;
+  while(thousands.test(num))
+    num = num.replace(thousands, '$1'+','+'$2');
+  return sign + '$' + num + cents;
 }
+
 
 const principalInput = document.getElementById("principal");
 
