@@ -1,36 +1,45 @@
 const principalInput = document.getElementById("principal");
 const interestInput = document.getElementById("interest");
+const tenureInput = document.getElementById("tenure");
+const form = document.querySelector("form");
 
-principalInput.addEventListener("input", addCommas);
+// Add commas to loan principal input in real-time
+principalInput.addEventListener("input", (event) => {
+  const value = event.target.value;
+  event.target.value = addCommas(value);
+});
 
-function addCommas(event) {
-  const input = event.target;
-  const plainValue = input.value.replace(/[^0-9]/g, "");
-  const formattedValue = new Intl.NumberFormat().format(plainValue);
-  input.value = formattedValue ? "$" + formattedValue : "";
+// Remove commas and dollar sign when submitting form
+form.addEventListener("submit", (event) => {
+  const principalValue = parseFloat(principalInput.value.replace(/,/g, "").replace(/\$/g, ""));
+  const interestValue = parseFloat(interestInput.value.replace(/\%/g, ""));
+  const tenureValue = parseFloat(tenureInput.value);
+
+  calculateMonthlyPayment(principalValue, interestValue, tenureValue);
+
+  event.preventDefault();
+});
+
+// Add percent sign to interest input when typing
+interestInput.addEventListener("input", (event) => {
+  event.target.value = event.target.value.replace(/[^0-9.]/g, "") + "%";
+});
+
+// Utility function to add commas to a number
+function addCommas(num) {
+  const str = num.toString();
+  if (str.length <= 3) return str;
+  const intPart = str.slice(0, -3);
+  const decimalPart = str.slice(-3);
+  return intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + decimalPart;
 }
 
-interestInput.addEventListener("input", addPercent);
-
-function addPercent(event) {
-  const input = event.target;
-  const plainValue = input.value.replace(/[^0-9\.]/g, "");
-  const formattedValue = plainValue ? plainValue + "%" : "";
-  input.value = formattedValue;
-}
-
-function calculateMonthlyPayment(principal, interestRate, tenure) {
-  const monthlyInterestRate = interestRate / 1200;
+function calculateMonthlyPayment(principal, interest, tenure) {
+  const monthlyInterest = (interest / 12) / 100;
   const numberOfPayments = tenure * 12;
-  const monthlyPayment = (principal * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
-  return monthlyPayment.toFixed(2);
-}
-
-function handleFormSubmission() {
-  const principal = parseFloat(principalInput.value.replace(/[^0-9\.]/g, ""));
-  const interestRate = parseFloat(interestInput.value.replace(/[^0-9\.]/g, ""));
-  const tenure = parseFloat(document.getElementById("tenure").value);
-  const monthlyPayment = calculateMonthlyPayment(principal, interestRate, tenure);
+  const numerator = monthlyInterest * Math.pow((1 + monthlyInterest), numberOfPayments);
+  const denominator = Math.pow((1 + monthlyInterest), numberOfPayments) - 1;
+  const monthlyPayment = principal * (numerator / denominator);
   const resultElement = document.getElementById("result");
-  resultElement.textContent = `Monthly payment: $${monthlyPayment}`;
+  resultElement.innerText = `Your monthly payment is $${monthlyPayment.toFixed(2)}`;
 }
