@@ -7,22 +7,17 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <header>
-      <h1>Loan Calculator</h1>
-    </header>
     <main>
+      <h1>Loan Calculator</h1>
       <form>
         <div>
-          <label for="principal">Loan principal:</label>
-          <input type="number" id="principal" name="principal" required>
+          <input type="number" id="principal" name="principal" placeholder="Loan principal" required>
         </div>
         <div>
-          <label for="interest">Interest rate (%):</label>
-          <input type="number" id="interest" name="interest" step="0.01" min="0" required>
+          <input type="number" id="interest" name="interest" step="0.01" min="0" placeholder="Interest rate (%)" required>
         </div>
         <div>
-          <label for="tenure">Loan tenure (years):</label>
-          <input type="number" id="tenure" name="tenure" required>
+          <input type="number" id="tenure" name="tenure" placeholder="Loan tenure (years)" required>
         </div>
         <div>
           <button type="button" onclick="handleFormSubmission()">Calculate monthly payment</button>
