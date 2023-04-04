@@ -1,13 +1,26 @@
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+}
+
+body {
   font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 main {
-  margin: 0 auto;
-  max-width: 600px;
-  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+h1 {
   text-align: center;
+  margin-bottom: 2rem;
 }
 
 form {
@@ -16,56 +29,60 @@ form {
   align-items: center;
 }
 
+div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
 input {
+  width: 20rem;
+  height: 2rem;
+  border: 2px solid #ccc;
   padding: 0.5rem;
-  margin: 0.5rem;
-  border: none;
-  border-bottom: 2px solid #ccc;
-  text-align: left;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  margin-top: 0.5rem;
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-input[type="number"]:invalid {
-  border-color: red;
-}
-
-input[type="number"]:focus {
+input:focus {
   outline: none;
-  border-bottom-color: blue;
+  border-color: #0077c2;
 }
 
-input::-webkit-input-placeholder {
-  text-align: left;
+.placeholder {
+  position: absolute;
+  top: 0.8rem;
+  left: 1.5rem;
+  font-size: 1rem;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease-out;
 }
 
-input[type="number"]::placeholder {
-  text-align: left;
+input:focus + .placeholder,
+input:not(:placeholder-shown) + .placeholder {
+  transform: translateY(-1.5rem) scale(0.8);
+  color: #0077c2;
 }
 
-button[type="button"] {
-  background-color: #4CAF50;
-  color: white;
+button {
+  background-color: #0077c2;
+  color: #fff;
   border: none;
-  padding: 0.5rem 2rem;
-  margin-top: 1rem;
-  border-bottom: 3px solid #3e8e41;
-}
-
-button[type="button"]:hover {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
   cursor: pointer;
+  width: 20rem;
+  height: 2rem;
 }
 
-#result {
-  margin-top: 1rem;
-  font-weight: bold;
-  font-size: 1.2rem;
+button:hover {
+  background-color: #005fa3;
 }
+
+button:active {
+  background-color: #004d8c;
+}
+
+#result
