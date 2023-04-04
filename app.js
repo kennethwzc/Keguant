@@ -1,45 +1,32 @@
 const principalInput = document.getElementById("principal");
 const interestInput = document.getElementById("interest");
 
-// Add dollar sign to the principal input
-principalInput.addEventListener("input", function (e) {
-  // Get the value of the input field
-  let principal = principalInput.value;
-  // Remove non-numeric characters from the input
-  principal = principal.replace(/[^0-9.]/g, "");
-  // Convert the input to a number
-  principal = Number(principal);
-  // Format the input with commas for thousands
-  principal = principal.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0 });
-  // Update the input field with the formatted value
-  principalInput.value = principal;
+principalInput.addEventListener("input", () => {
+  const value = principalInput.value.replace(/\D/g, "");
+  const formattedValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  principalInput.value = `$${formattedValue}`;
 });
 
-// Add percent sign to the interest input
-interestInput.addEventListener("input", function (e) {
-  // Get the value of the input field
-  let interest = interestInput.value;
-  // Remove non-numeric characters from the input
-  interest = interest.replace(/[^0-9.]/g, "");
-  // Convert the input to a number
-  interest = Number(interest);
-  // Format the input as a percentage
-  interest = interest.toLocaleString("en-US", { style: "percent", minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  // Update the input field with the formatted value
-  interestInput.value = interest;
+interestInput.addEventListener("input", () => {
+  const value = interestInput.value.replace(/\D/g, "");
+  const formattedValue = value ? `${value}%` : "";
+  interestInput.value = formattedValue;
 });
 
-// Calculate the monthly payment and display it on the page
 function handleFormSubmission() {
-  const principal = Number(principalInput.value.replace(/[^0-9.]/g, ""));
-  const interest = Number(interestInput.value.replace(/[^0-9.]/g, ""));
-  const tenure = Number(document.getElementById("tenure").value);
-  const monthlyInterestRate = interest / 100 / 12;
-  const totalPayments = tenure * 12;
-  const discountFactor =
-    (Math.pow(1 + monthlyInterestRate, totalPayments) - 1) /
-    (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, totalPayments));
-  const monthlyPayment = principal / discountFactor;
+  const principal = parseFloat(principalInput.value.replace(/[^0-9.-]+/g,""));
+  const interest = parseFloat(interestInput.value.replace(/[^0-9.-]+/g,"")) / 100;
+  const tenure = parseInt(document.getElementById("tenure").value);
+
+  const monthlyInterestRate = interest / 12;
+  const numberOfPayments = tenure * 12;
+
+  const monthlyPayment =
+    (principal *
+      monthlyInterestRate *
+      Math.pow(1 + monthlyInterestRate, numberOfPayments)) /
+    (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+
   const resultElement = document.getElementById("result");
-  resultElement.textContent = "Monthly payment: " + monthlyPayment.toFixed(2);
+  resultElement.textContent = `$${monthlyPayment.toFixed(2)} per month`;
 }
