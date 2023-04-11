@@ -14,7 +14,7 @@ main {
 }
 
 #loan-calculator-result {
-  background-color: #f0f0f0;
+  border: 2px solid #ccc;
   align-items: center;
   justify-content: center;
 }
