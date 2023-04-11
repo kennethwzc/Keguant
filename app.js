@@ -27,13 +27,15 @@ function addLoanToTable(principal, interest, tenure) {
 }
 
 // Function to handle form submission
-function handleFormSubmission() {
+function handleFormSubmission(event) {
+  event.preventDefault(); // Prevent form from refreshing the page
   const principal = document.getElementById('principal').value;
   const interest = document.getElementById('interest').value;
   const tenure = document.getElementById('tenure').value;
   
   calculateMonthlyPayment(principal, interest, tenure);
   addLoanToTable(principal, interest, tenure);
+  document.getElementById("loan-form-wrapper").classList.add("hidden"); // Hide the form after submission
 }
 
 const addLoanButton = document.getElementById("add-loan-button");
@@ -43,3 +45,5 @@ addLoanButton.addEventListener("click", function() {
   loanFormWrapper.classList.remove("hidden");
 });
 
+const loanForm = document.getElementById("loan-form");
+loanForm.addEventListener("submit", handleFormSubmission);
