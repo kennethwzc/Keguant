@@ -18,10 +18,31 @@ function renderLoans() {
   }
 }
 
+function addLoan(loanName, principle, interestRate, tenure) {
+  const loan = {
+    loanName: loanName,
+    principle: principle,
+    interestRate: interestRate,
+    tenure: tenure
+  };
+  loans.push(loan);
+  renderLoans();
+}
+
 loanForm.addEventListener("submit", function(event) {
   event.preventDefault();
 
+  // get input values
   const loanNameInput = document.querySelector("#loanName");
   const principleInput = document.querySelector("#principle");
   const interestRateInput = document.querySelector("#interestRate");
-  const tenureInput = document
+  const tenureInput = document.querySelector("#tenure");
+  const loanName = loanNameInput.value;
+  const principle = parseFloat(principleInput.value);
+  const interestRate = parseFloat(interestRateInput.value);
+  const tenure = parseFloat(tenureInput.value);
+
+  // add loan to array and clear form
+  addLoan(loanName, principle, interestRate, tenure);
+  loanForm.reset();
+});
