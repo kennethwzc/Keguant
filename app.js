@@ -1,5 +1,5 @@
 function calculateMonthlyPayment(principal, interest, tenure) {
-  const monthlyPayment = /* calculation */;
+  const monthlyPayment = (principal * interestRate * (Math.pow(1 + interestRate, loanTenure))) / (Math.pow(1 + interestRate, loanTenure) - 1);
   const resultElement = document.getElementById("result");
   resultElement.textContent = `Monthly Payment: $${monthlyPayment.toFixed(2)}`;
   return monthlyPayment;
