@@ -4,16 +4,6 @@ const LoanCalculator = (() => {
   const resultElement = document.getElementById("result");
   const tenure = document.getElementById("tenure");
 
-  function formatPrincipalValue(value) {
-    const formattedValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return `$${formattedValue}`;
-  }
-
-  function formatInterestValue(value) {
-    const formattedValue = value.replace(/(?!\d|%)/g, "");
-    return formattedValue ? `${formattedValue}%` : "";
-  }
-
   function handleFormSubmission(event) {
     event.preventDefault();
     const principal = parseFloat(principalInput.value.replace(/[^0-9.-]+/g,""));
