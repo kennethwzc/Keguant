@@ -1,17 +1,24 @@
-function displayResult(result) {
-  const resultElement = document.getElementById('result');
-  resultElement.innerHTML = `Monthly payment: $${result.toFixed(2)}`;
+window.addEventListener('load', () => {
+  const finalPaymentElement = document.getElementById('final-payment');
+  finalPaymentElement.setAttribute('placeholder', '$0.00');
+});
+
+function calculateMonthlyPayment(principal, interest, tenure) {
+  // Implementation of the calculateMonthlyPayment function
 }
 
 function handleFormSubmission() {
-  const principal = parseFloat(document.getElementById("principal").value);
-  const interestRate = parseFloat(document.getElementById("interest").value) / 100 / 12;
-  const loanTenure = parseInt(document.getElementById("tenure").value) * 12;
+  const principal = document.getElementById('principal').value;
+  const interest = document.getElementById('interest').value;
+  const tenure = document.getElementById('tenure').value;
+  const monthlyPayment = calculateMonthlyPayment(principal, interest, tenure);
+  displayResult(monthlyPayment);
+}
 
-  const monthlyPayment = (principal * interestRate * (Math.pow(1 + interestRate, loanTenure))) / (Math.pow(1 + interestRate, loanTenure) - 1);
-
-  const resultElement = document.getElementById("result");
-  resultElement.textContent = `Monthly Payment: $${monthlyPayment.toFixed(2)}`;
-
-  displayFinalPayment(monthlyPayment);
+function displayResult(result) {
+  const resultElement = document.getElementById('result');
+  resultElement.innerHTML = `Monthly payment: $${result.toFixed(2)}`;
+  
+  const finalPaymentElement = document.getElementById('final-payment');
+  finalPaymentElement.setAttribute('placeholder', '$0.00');
 }
