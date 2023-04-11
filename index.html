@@ -23,31 +23,18 @@
             <div class="tab tab-1">
                 <table id="table" border="1">
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Age</th>
-                    </tr>
-                    <tr>
-                        <td>A1</td>
-                        <td>B1</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <td>A3</td>
-                        <td>B3</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>A2</td>
-                        <td>B2</td>
-                        <td>20</td>
+                        <th>Loan name</th>
+                        <th>Princple</th>
+                        <th>Interest rate</th>
+                        <th>tenure</th>
                     </tr>
                 </table>
             </div>
             <div class="tab tab-2">
-                First Name :<input type="text" name="fname" id="fname">
-                Last Name :<input type="text" name="lname" id="lname">
-                Age :<input type="number" name="age" id="age">
+                Loan name :<input type="text" name="loan_name" id="loan_name">
+                Principle :<input type="number" name="loan_principle" id="loan_principle">
+                Interest rate :<input type="number" name="loan_interest_rate" id="loan_interest_rate">
+                tenure :<input type="number" name="loan_tenure" id="loan_tenure">
                 
                 <button onclick="addHtmlTableRow();">Add</button>
                 <button onclick="editHtmlTbleSelectedRow();">Edit</button>
@@ -64,22 +51,28 @@
             function checkEmptyInput()
             {
                 var isEmpty = false,
-                    fname = document.getElementById("fname").value,
-                    lname = document.getElementById("lname").value,
-                    age = document.getElementById("age").value;
+                    loan_name = document.getElementById("loan_name").value,
+                    loan_principle = document.getElementById("loan_principle").value,
+                    loan_interest_rate = document.getElementById("loan_interest_rate").value,
+                    loan_tenure = document.getElementById("loan_tenure").value;
             
-                if(fname === ""){
-                    alert("First Name Connot Be Empty");
+                if(loan_name === ""){
+                    alert("Loan name connot be empty");
                     isEmpty = true;
                 }
-                else if(lname === ""){
-                    alert("Last Name Connot Be Empty");
+                else if(loan_principle === ""){
+                    alert("Loan principle connot be empty");
                     isEmpty = true;
                 }
-                else if(age === ""){
-                    alert("Age Connot Be Empty");
+                else if(loan_interest_rate === ""){
+                    alert("Loan interest rate connot be empty");
                     isEmpty = true;
                 }
+                else if(loan_tenure === ""){
+                    alert("Loan tenure rate connot be empty");
+                    isEmpty = true;
+                }
+
                 return isEmpty;
             }
             
@@ -95,13 +88,16 @@
                     cell1 = newRow.insertCell(0),
                     cell2 = newRow.insertCell(1),
                     cell3 = newRow.insertCell(2),
-                    fname = document.getElementById("fname").value,
-                    lname = document.getElementById("lname").value,
-                    age = document.getElementById("age").value;
+                    cell4 = newRow.insertCell(3),
+                    loan_name = document.getElementById("loan_name").value,
+                    loan_principle = document.getElementById("loan_principle").value,
+                    loan_interest_rate = document.getElementById("loan_interest_rate").value;
+                    loan_tenure = document.getElementById("loan_tenure").value;
             
-                cell1.innerHTML = fname;
-                cell2.innerHTML = lname;
-                cell3.innerHTML = age;
+                cell1.innerHTML = loan_name;
+                cell2.innerHTML = loan_principle;
+                cell3.innerHTML = loan_interest_rate;
+                cell4.innerHTML = loan_tenure;
                 // call the function to set the event to the new row
                 selectedRowToInput();
             }
@@ -117,9 +113,10 @@
                     {
                       // get the seected row index
                       rIndex = this.rowIndex;
-                      document.getElementById("fname").value = this.cells[0].innerHTML;
-                      document.getElementById("lname").value = this.cells[1].innerHTML;
-                      document.getElementById("age").value = this.cells[2].innerHTML;
+                      document.getElementById("loan_name").value = this.cells[0].innerHTML;
+                      document.getElementById("loan_principle").value = this.cells[1].innerHTML;
+                      document.getElementById("loan_interest_rate").value = this.cells[2].innerHTML;
+                      document.getElementById("loan_tenure").value = this.cells[3].innerHTML;
                     };
                 }
             }
@@ -127,13 +124,15 @@
             
             function editHtmlTbleSelectedRow()
             {
-                var fname = document.getElementById("fname").value,
-                    lname = document.getElementById("lname").value,
-                    age = document.getElementById("age").value;
+                var loan_name = document.getElementById("loan_name").value,
+                    loan_principle = document.getElementById("loan_principle").value,
+                    loan_interest_rate = document.getElementById("loan_interest_rate").value,
+                    loan_tenure = document.getElementById("loan_tenure").value;
                if(!checkEmptyInput()){
-                table.rows[rIndex].cells[0].innerHTML = fname;
-                table.rows[rIndex].cells[1].innerHTML = lname;
-                table.rows[rIndex].cells[2].innerHTML = age;
+                table.rows[rIndex].cells[0].innerHTML = loan_name;
+                table.rows[rIndex].cells[1].innerHTML = loan_principle;
+                table.rows[rIndex].cells[2].innerHTML = loan_interest_rate;
+                table.rows[rIndex].cells[3].innerHTML = loan_tenure;
               }
             }
             
@@ -141,9 +140,10 @@
             {
                 table.deleteRow(rIndex);
                 // clear input text
-                document.getElementById("fname").value = "";
-                document.getElementById("lname").value = "";
-                document.getElementById("age").value = "";
+                document.getElementById("loan_name").value = "";
+                document.getElementById("loan_principle").value = "";
+                document.getElementById("loan_interest_rate").value = "";
+                document.getElementById("loan_tenure").value = "";
             }
         </script>
         
