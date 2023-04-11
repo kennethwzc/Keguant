@@ -1,6 +1,10 @@
 function displayFinalPayment(payment) {
   const finalPaymentElement = document.getElementById("final-payment");
-  finalPaymentElement.textContent = `Final Monthly Payment: $${payment.toFixed(2)}`;
+  if (payment === undefined || isNaN(payment)) {
+    finalPaymentElement.textContent = "Final Monthly Payment: $0.00";
+  } else {
+    finalPaymentElement.textContent = `Final Monthly Payment: $${payment.toFixed(2)}`;
+  }
 }
 
 function handleFormSubmission() {
