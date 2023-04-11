@@ -35,3 +35,11 @@ function handleFormSubmission() {
   calculateMonthlyPayment(principal, interest, tenure);
   addLoanToTable(principal, interest, tenure);
 }
+
+const addLoanButton = document.getElementById("add-loan-button");
+const loanFormWrapper = document.getElementById("loan-form-wrapper");
+
+addLoanButton.addEventListener("click", function() {
+  loanFormWrapper.classList.remove("hidden");
+});
+
