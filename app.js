@@ -1,31 +1,17 @@
-const LoanCalculator = (() => {
-  const principalInput = document.getElementById("principal");
-  const interestInput = document.getElementById("interest");
+function displayFinalPayment(payment) {
+  const finalPaymentElement = document.getElementById("final-payment");
+  finalPaymentElement.textContent = `Final Monthly Payment: $${payment.toFixed(2)}`;
+}
+
+function handleFormSubmission() {
+  const principal = parseFloat(document.getElementById("principal").value);
+  const interestRate = parseFloat(document.getElementById("interest").value) / 100 / 12;
+  const loanTenure = parseInt(document.getElementById("tenure").value) * 12;
+
+  const monthlyPayment = (principal * interestRate * (Math.pow(1 + interestRate, loanTenure))) / (Math.pow(1 + interestRate, loanTenure) - 1);
+
   const resultElement = document.getElementById("result");
-  const tenure = document.getElementById("tenure");
+  resultElement.textContent = `Monthly Payment: $${monthlyPayment.toFixed(2)}`;
 
-  function handleFormSubmission(event) {
-    event.preventDefault();
-    const principal = parseFloat(principalInput.value.replace(/[^0-9.-]+/g,""));
-    const interest = parseFloat(interestInput.value.replace(/[^0-9.-]+/g,"")) / 100;
-    const numberOfPayments = tenure.value * 12;
-    const monthlyInterestRate = interest / 12;
-
-    const monthlyPayment =
-      (principal *
-        monthlyInterestRate *
-        Math.pow(1 + monthlyInterestRate, numberOfPayments)) /
-      (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
-
-    resultElement.textContent = `$${monthlyPayment.toFixed(2)} per month`;
-  }
-
-  function init() {
-    const formElement = document.getElementById("loan-form");
-    formElement.addEventListener("submit", handleFormSubmission);
-  }
-
-  return { init };
-})();
-
-LoanCalculator.init();
+  displayFinalPayment(monthlyPayment);
+}
