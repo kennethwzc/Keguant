@@ -12,8 +12,3 @@ function handleFormSubmission() {
   const monthlyPayment = calculateMonthlyPayment(principal, interest, tenure);
   displayResult(monthlyPayment);
 }
-
-function displayResult(result) {
-  const resultElement = document.getElementById('result');
-  resultElement.textContent = `Monthly payment: $${result.toFixed(2)}`;
-}
