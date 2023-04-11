@@ -1,10 +1,9 @@
-function displayFinalPayment(payment) {
-  const finalPaymentElement = document.getElementById("final-payment");
-  if (payment === undefined || isNaN(payment)) {
-    finalPaymentElement.textContent = "Final Monthly Payment: $0.00";
-  } else {
-    finalPaymentElement.textContent = `Final Monthly Payment: $${payment.toFixed(2)}`;
-  }
+function displayResult(result) {
+  const resultElement = document.getElementById('result');
+  resultElement.innerHTML = `Monthly payment: $${result.toFixed(2)}`;
+  
+  const finalPaymentElement = document.getElementById('final-payment');
+  finalPaymentElement.setAttribute('placeholder', '0.00');
 }
 
 function handleFormSubmission() {
