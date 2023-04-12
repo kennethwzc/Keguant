@@ -1,25 +1,27 @@
+<script>
 .container {
-  overflow: hidden;
-}
+    overflow: hidden;
+  }
 
-.tab {
-  float: left;
-}
+  .tab {
+    float: left;
+  }
 
-.tab-2 {
-  margin-left: 50px;
-}
+  .tab-2 {
+    margin-left: 50px;
+  }
 
-.tab-2 input {
-  display: block;
-  margin-bottom: 10px;
-}
+  .tab-2 input {
+    display: block;
+    margin-bottom: 10px;
+  }
 
-tr {
-  transition: all 0.25s ease-in-out;
-}
+  tr {
+    transition: all 0.25s ease-in-out;
+  }
 
-tr:hover {
-  background-color: #EEE;
-  cursor: pointer;
-}
+  tr:hover {
+    background-color: #EEE;
+    cursor: pointer;
+  }
+</script>
