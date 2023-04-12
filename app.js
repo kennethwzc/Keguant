@@ -1,48 +1,81 @@
-const loanForm = document.querySelector("#loanForm");
-const loanTableBody = document.querySelector("#loanTableBody");
-
-let loans = [];
-
-function renderLoans() {
-  loanTableBody.innerHTML = "";
-  for (let i = 0; i < loans.length; i++) {
-    const loan = loans[i];
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${loan.loanName}</td>
-      <td>$${loan.principle.toFixed(2)}</td>
-      <td>${loan.interestRate.toFixed(2)}%</td>
-      <td>${loan.tenure} years</td>
-    `;
-    loanTableBody.appendChild(row);
+<script>
+  let rIndex;
+  const table = document.getElementById("table");
+  
+  function checkEmptyInput() {
+    let isEmpty = false;
+    const loan_name = document.getElementById("loan_name").value;
+    const loan_principle = document.getElementById("loan_principle").value;
+    const loan_interest_rate = document.getElementById("loan_interest_rate").value;
+    const loan_tenure = document.getElementById("loan_tenure").value;
+    
+    if(loan_name === ""){
+      alert("Loan name cannot be empty");
+      isEmpty = true;
+    } else if(loan_principle === ""){
+      alert("Loan principle cannot be empty");
+      isEmpty = true;
+    } else if(loan_interest_rate === ""){
+      alert("Loan interest rate cannot be empty");
+      isEmpty = true;
+    } else if(loan_tenure === ""){
+      alert("Loan tenure cannot be empty");
+      isEmpty = true;
+    }
+    return isEmpty;
   }
-}
-
-function addLoan(loanName, principle, interestRate, tenure) {
-  const loan = {
-    loanName: loanName,
-    principle: principle,
-    interestRate: interestRate,
-    tenure: tenure
-  };
-  loans.push(loan);
-  renderLoans();
-}
-
-loanForm.addEventListener("submit", function(event) {
-  event.preventDefault();
-
-  // get input values
-  const loanNameInput = document.querySelector("#loanName");
-  const principleInput = document.querySelector("#principle");
-  const interestRateInput = document.querySelector("#interestRate");
-  const tenureInput = document.querySelector("#tenure");
-  const loanName = loanNameInput.value;
-  const principle = parseFloat(principleInput.value);
-  const interestRate = parseFloat(interestRateInput.value);
-  const tenure = parseFloat(tenureInput.value);
-
-  // add loan to array and clear form
-  addLoan(loanName, principle, interestRate, tenure);
-  loanForm.reset();
-});
+  
+  function addHtmlTableRow() {
+    if(!checkEmptyInput()) {
+      const newRow = table.insertRow(table.length);
+      const cell1 = newRow.insertCell(0);
+      const cell2 = newRow.insertCell(1);
+      const cell3 = newRow.insertCell(2);
+      const cell4 = newRow.insertCell(3);
+      const loan_name = document.getElementById("loan_name").value;
+      const loan_principle = document.getElementById("loan_principle").value;
+      const loan_interest_rate = document.getElementById("loan_interest_rate").value;
+      const loan_tenure = document.getElementById("loan_tenure").value;
+      
+      cell1.innerHTML = loan_name;
+      cell2.innerHTML = loan_principle;
+      cell3.innerHTML = loan_interest_rate;
+      cell4.innerHTML = loan_tenure;
+      selectedRowToInput();
+    }
+  }
+  
+  function selectedRowToInput() {
+    for(let i = 1; i < table.rows.length; i++) {
+      table.rows[i].onclick = function() {
+        rIndex = this.rowIndex;
+        document.getElementById("loan_name").value = this.cells[0].innerHTML;
+        document.getElementById("loan_principle").value = this.cells[1].innerHTML;
+        document.getElementById("loan_interest_rate").value = this.cells[2].innerHTML;
+        document.getElementById("loan_tenure").value = this.cells[3].innerHTML;
+      };
+    }
+  }
+  selectedRowToInput();
+  
+  function editHtmlTbleSelectedRow() {
+    const loan_name = document.getElementById("loan_name").value;
+    const loan_principle = document.getElementById("loan_principle").value;
+    const loan_interest_rate = document.getElementById("loan_interest_rate").value;
+    const loan_tenure = document.getElementById("loan_tenure").value;
+    if(!checkEmptyInput()) {
+      table.rows[rIndex].cells[0].innerHTML = loan_name;
+      table.rows[rIndex].cells[1].innerHTML = loan_principle;
+      table.rows[rIndex].cells[2].innerHTML = loan_interest_rate;
+      table.rows[rIndex].cells[3].innerHTML = loan_tenure;
+    }
+  }
+  
+  function removeSelectedRow() {
+    table.deleteRow(rIndex);
+    document.getElementById("loan_name").value = "";
+    document.getElementById("loan_principle").value = "";
+    document.getElementById("loan_interest_rate").value = "";
+    document.getElementById("loan_tenure").value = "";
+  }
+</script>
