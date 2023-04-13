@@ -78,3 +78,24 @@ function removeSelectedRow() {
 }
 
 selectedRowToInput();
+
+function editHtmlTbleSelectedRow() {
+  const loan_name = document.getElementById("loan_name").value;
+  const loan_principle = document.getElementById("loan_principle").value;
+  const loan_interest_rate = document.getElementById("loan_interest_rate").value;
+  const loan_tenure = document.getElementById("loan_tenure").value;
+  if(!checkEmptyInput()) {
+    table.rows[rIndex].cells[0].innerHTML = loan_name;
+    table.rows[rIndex].cells[1].innerHTML = loan_principle;
+    table.rows[rIndex].cells[2].innerHTML = loan_interest_rate;
+    table.rows[rIndex].cells[3].innerHTML = loan_tenure;
+  }
+}
+
+function removeSelectedRow() {
+  table.deleteRow(rIndex);
+  document.getElementById("loan_name").value = "";
+  document.getElementById("loan_principle").value = "";
+  document.getElementById("loan_interest_rate").value = "";
+  document.getElementById("loan_tenure").value = "";
+}
