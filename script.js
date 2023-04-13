@@ -1,5 +1,6 @@
 let rIndex;
 const table = document.getElementById("table");
+selectedRowToInput();
 
 function selectedRowToInput() {
   for(let i = 1; i < table.rows.length; i++) {
@@ -77,4 +78,4 @@ function removeSelectedRow() {
   document.getElementById("loan_tenure").value = "";
 }
 
-selectedRowToInput();
+
