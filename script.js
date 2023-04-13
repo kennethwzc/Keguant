@@ -1,6 +1,18 @@
 let rIndex;
 const table = document.getElementById("table");
 
+function selectedRowToInput() {
+  for(let i = 1; i < table.rows.length; i++) {
+    table.rows[i].onclick = function() {
+      rIndex = this.rowIndex;
+      document.getElementById("loan_name").value = this.cells[0].innerHTML;
+      document.getElementById("loan_principle").value = this.cells[1].innerHTML;
+      document.getElementById("loan_interest_rate").value = this.cells[2].innerHTML;
+      document.getElementById("loan_tenure").value = this.cells[3].innerHTML;
+    };
+  }
+}
+
 function checkEmptyInput() {
   let isEmpty = false;
   const loan_name = document.getElementById("loan_name").value;
@@ -44,20 +56,7 @@ function addHtmlTableRow() {
   }
 }
 
-function selectedRowToInput() {
-  for(let i = 1; i < table.rows.length; i++) {
-    table.rows[i].onclick = function() {
-      rIndex = this.rowIndex;
-      document.getElementById("loan_name").value = this.cells[0].innerHTML;
-      document.getElementById("loan_principle").value = this.cells[1].innerHTML;
-      document.getElementById("loan_interest_rate").value = this.cells[2].innerHTML;
-      document.getElementById("loan_tenure").value = this.cells[3].innerHTML;
-    };
-  }
-}
-selectedRowToInput();
-
-function editHtmlTbleSelectedRow() {
+function editHtmlTableSelectedRow() {
   const loan_name = document.getElementById("loan_name").value;
   const loan_principle = document.getElementById("loan_principle").value;
   const loan_interest_rate = document.getElementById("loan_interest_rate").value;
@@ -77,3 +76,5 @@ function removeSelectedRow() {
   document.getElementById("loan_interest_rate").value = "";
   document.getElementById("loan_tenure").value = "";
 }
+
+selectedRowToInput();
