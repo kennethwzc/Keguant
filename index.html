@@ -8,29 +8,51 @@
 <body>
   <h1>Loan Repayment Calculator</h1>
   <form action="/calculate" method="post">
+    <table>
+      <thead>
+        <tr>
+          <th>Loan Name</th>
+          <th>Loan Amount</th>
+          <th>Tenure (years)</th>
+          <th>Interest Rate (%)</th>
+          <th>Monthly Payment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" name="loanName" id="loanName" placeholder="Loan Name"></td>
+          <td><input type="text" name="loanAmount" id="loanAmount" placeholder="10000"></td>
+          <td><input type="text" name="tenure" id="tenure" placeholder="10"></td>
+          <td><input type="text" name="interestRate" id="interestRate" placeholder="5"></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
     <div>
-      <label for="loanAmount">Loan Amount</label>
-      <input type="text" name="loanAmount" id="loanAmount" placeholder="10000">
-    </div>
-    <div>
-      <label for="tenure">Tenure (years)</label>
-      <input type="text" name="tenure" id="tenure" placeholder="10">
-    </div>
-    <div>
-      <label for="interestRate">Interest Rate (%)</label>
-      <input type="text" name="interestRate" id="interestRate" placeholder="5">
-    </div>
-    <div>
-      <input type="submit" value="Calculate">
+      <input type="submit" value="Add">
     </div>
   </form>
   <script>
     function calculate() {
+      const loanName = document.getElementById("loanName").value;
       const loanAmount = document.getElementById("loanAmount").value;
       const tenure = document.getElementById("tenure").value;
       const interestRate = document.getElementById("interestRate").value;
       const monthlyPayment = (loanAmount * interestRate / 100) / (1 - Math.pow(1 + interestRate / 100, -tenure * 12));
-      document.getElementById("monthlyPayment").innerHTML = monthlyPayment;
+      const table = document.getElementById("table");
+      const row = table.insertRow(-1);
+      row.insertCell(0).textContent = loanName;
+      row.insertCell(1).textContent = loanAmount;
+      row.insertCell(2).textContent = tenure;
+      row.insertCell(3).textContent = interestRate;
+      row.insertCell(4).textContent = monthlyPayment;
+      const totalMonthlyPayment = 0;
+      for (const cell of table.rows[table.rows.length - 1].cells) {
+        if (cell.textContent) {
+          totalMonthlyPayment += +cell.textContent;
+        }
+      }
+      table.rows[table.rows.length - 1].cells[4].textContent = totalMonthlyPayment;
     }
   </script>
 </body>
