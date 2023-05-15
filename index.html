@@ -33,27 +33,25 @@
     </div>
   </form>
   <script>
-    function calculate() {
-      const loanName = document.getElementById("loanName").value;
-      const loanAmount = document.getElementById("loanAmount").value;
-      const tenure = document.getElementById("tenure").value;
-      const interestRate = document.getElementById("interestRate").value;
-      const monthlyPayment = (loanAmount * interestRate / 100) / (1 - Math.pow(1 + interestRate / 100, -tenure * 12));
-      const table = document.getElementById("table");
-      const row = table.insertRow(-1);
-      row.insertCell(0).textContent = loanName;
-      row.insertCell(1).textContent = loanAmount;
-      row.insertCell(2).textContent = tenure;
-      row.insertCell(3).textContent = interestRate;
-      row.insertCell(4).textContent = monthlyPayment;
-      const totalMonthlyPayment = 0;
-      for (const cell of table.rows[table.rows.length - 1].cells) {
-        if (cell.textContent) {
-          totalMonthlyPayment += +cell.textContent;
-        }
+    var loanName = document.getElementById("loanName").value;
+    var loanAmount = document.getElementById("loanAmount").value;
+    var tenure = document.getElementById("tenure").value;
+    var interestRate = document.getElementById("interestRate").value;
+    var monthlyPayment = (loanAmount * interestRate / 100) / (1 - Math.pow(1 + interestRate / 100, -tenure * 12));
+    var table = document.getElementById("table");
+    var row = table.insertRow(-1);
+    row.insertCell(0).textContent = loanName;
+    row.insertCell(1).textContent = loanAmount;
+    row.insertCell(2).textContent = tenure;
+    row.insertCell(3).textContent = interestRate;
+    row.insertCell(4).textContent = monthlyPayment;
+    var totalMonthlyPayment = 0;
+    for (var cell of table.rows[table.rows.length - 1].cells) {
+      if (cell.textContent) {
+        totalMonthlyPayment += +cell.textContent;
       }
-      table.rows[table.rows.length - 1].cells[4].textContent = totalMonthlyPayment;
     }
+    table.rows[table.rows.length - 1].cells[4].textContent = totalMonthlyPayment;
   </script>
 </body>
 </html>
