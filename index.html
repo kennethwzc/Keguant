@@ -1,35 +1,54 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Add Edit Remove HTML Table Row</title>
-        <meta charset="windows-1252">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="styles.css">
-        <script src="script.js"></script>
-    </head>
-    <body>
-        
-        <div class="container">
-            <div class="tab tab-1">
-                <table id="table" border="1">
-                    <tr>
-                        <th>Loan name</th>
-                        <th>Princple</th>
-                        <th>Interest rate</th>
-                        <th>tenure</th>
-                    </tr>
-                </table>
-            </div>
-            <div class="tab tab-2">
-                Loan name :<input type="text" name="loan_name" id="loan_name">
-                Principle :<input type="number" name="loan_principle" id="loan_principle">
-                Interest rate :<input type="number" name="loan_interest_rate" id="loan_interest_rate">
-                tenure :<input type="number" name="loan_tenure" id="loan_tenure">
-                
-                <button onclick="addHtmlTableRow();">Add</button>
-                <button onclick="editHtmlTableSelectedRow();">Edit</button>
-                <button onclick="removeSelectedRow();">Remove</button>
-            </div>
-        </div>
-    </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan Repayment Calculator</title>
+</head>
+<body>
+  <h1>Loan Repayment Calculator</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Loan Name</th>
+        <th>Amount</th>
+        <th>Tenure (years)</th>
+        <th>Interest Rate (%)</th>
+        <th>Monthly Payment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="text" name="loanName" id="loanName" placeholder="Loan Name"></td>
+        <td><input type="text" name="loanAmount" id="loanAmount" placeholder="10000"></td>
+        <td><input type="text" name="tenure" id="tenure" placeholder="10"></td>
+        <td><input type="text" name="interestRate" id="interestRate" placeholder="5"></td>
+        <td><input type="text" name="monthlyPayment" id="monthlyPayment" readonly></td>
+      </tr>
+    </tbody>
+  </table>
+  <button onclick="calculate()">Calculate</button>
+  <div id="totalMonthlyPayment"></div>
+  <script>
+    function calculate() {
+      const loans = [];
+      for (const row of document.querySelectorAll("table tr")) {
+        const loanName = row.querySelector("#loanName").value;
+        const loanAmount = row.querySelector("#loanAmount").value;
+        const tenure = row.querySelector("#tenure").value;
+        const interestRate = row.querySelector("#interestRate").value;
+        const monthlyPayment = (loanAmount * interestRate / 100) / (1 - Math.pow(1 + interestRate / 100, -tenure * 12));
+        loans.push({
+          loanName,
+          loanAmount,
+          tenure,
+          interestRate,
+          monthlyPayment,
+        });
+      }
+      const totalMonthlyPayment = loans.reduce((a, b) => a + b.monthlyPayment);
+      document.getElementById("totalMonthlyPayment").innerHTML = totalMonthlyPayment;
+    }
+  </script>
+</body>
 </html>
